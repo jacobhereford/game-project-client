@@ -37,11 +37,28 @@ const onChangePassword = function(event){
   .fail(ui.failure);
 };
 
+const gameCreation = function(event){
+  event.preventDefault();
+  api.gameCreation()
+  .done(ui.gameCreation)
+  .fail(ui.failure)
+}
+
+const gameUpdate = function(event){
+  event.preventDefault();
+  let data = "";
+  api.gameUpdate(data)
+  .done(ui.gameUpdate)
+  .fail(ui.failure)
+}
+
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp);
   $('#sign-in').on('submit', onSignIn);
   $('#sign-out').on('submit', onSignOut);
   $('#change-password').on('submit', onChangePassword);
+  $('#game-create').on('click', gameCreation);
+  $('#game-update').on('click', gameUpdate);
 };
 
 module.exports = {

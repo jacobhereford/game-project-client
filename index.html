@@ -1,54 +1,121 @@
 <!DOCTYPE html>
 <html>
-    <head>
-      <title>Example</title>
+  <head>
+    <title>TIC TAC TOE!!</title>
 
       <script src="vendor.bundle.js" type="text/javascript" charset="utf-8" defer></script>
       <script src="bundle.js" type="text/javascript" charset="utf-8" defer></script>
-    </head>
-    <body class="container-fluid">
+  </head>
+  <body class="container-fluid">
+    <h1>TIC TAC TOE!!!</h1>
       <form id="sign-up">
         <fieldset>
           <legend>Sign up!</legend>
-          <input type="text" name="credentials[email]" placeholder="E-mail">
-          <input type="password" name="credentials[password]" placeholder="Password">
-          <input type="password" name="credentials[password_confirmation]" placeholder="Password Confirm">
-          <input type="submit" name="submit" value="Sign up!">
+            <input type="text" name="credentials[email]" placeholder="E-mail">
+            <input type="password" name="credentials[password]" placeholder="Password">
+            <input type="password" name="credentials[password_confirmation]" placeholder="Password Confirm">
+            <input type="submit" name="submit" value="Sign up!">
         </fieldset>
       </form>
-
       <form id="sign-in">
         <fieldset>
           <legend>Sign In!</legend>
-          <input type="text" name="credentials[email]" placeholder="E-mail">
-          <input type="password" name="credentials[password]" placeholder="Password">
-          <input type="submit" name="submit" value="Sign In!">
+            <input type="text" name="credentials[email]" placeholder="E-mail">
+            <input type="password" name="credentials[password]" placeholder="Password">
+            <input type="submit" name="submit" value="Sign In!">
         </fieldset>
       </form>
-
       <form id="sign-out">
         <fieldset>
-          <legend>DON'T LEAVE!!!!</legend>
-          <input type="submit" name="submit" value="Sign out!">
+          <legend>Sign Out</legend>
+            <input type="submit" name="submit" value="Sign out!">
         </fieldset>
       </form>
-
       <form id="change-password">
         <fieldset>
           <legend>Change Password</legend>
-          <input type="password" name="passwords[old]" placeholder="Old Password">
-          <input type="password" name="passwords[new]" placeholder="New Password">
-          <input type="submit" name="submit" value="Change Password">
+            <input type="password" name="passwords[old]" placeholder="Old Password">
+            <input type="password" name="passwords[new]" placeholder="New Password">
+            <input type="submit" name="submit" value="Change Password">
         </fieldset>
       </form>
-      <h1>Example</h1>
+      <div id="game-create" class="btn btn-primary">Create Game</div>
+      <div id="game-update" class="btn btn-primary">Update Game</div>
+      <div class="contanier">
+        <div class="row article">
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="0">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="1">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="2">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="3">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="4">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="5">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="6">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="7">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+            <form>
+              <input name="game[cell][index]" type="hidden" value="8">
+              <input name="game[cell][value]" type="hidden" value="">
+              <input name="game[over]" type="hidden" value="false">
+            </form>
+          </div>
+        </div>
+      </div>
 
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-      eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-      minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-      ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.</p>
+      <div class="container">
+        WHO WILL WIN?!?!?!
+
+          <section>Jacob Hereford</section>
+          <section>General Assembly</section>
+
+      </div>
+
     </body>
 </html>

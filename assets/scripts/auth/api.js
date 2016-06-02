@@ -38,10 +38,35 @@ const changePassword = (data) => {
   });
 }
 
+const gameUpdate = (data) => {
+  return $.ajax({
+    url: app.host + '/games/' + app.game.id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data: data,
+  });
+}
+
+const gameCreation = () => {
+  return $.ajax({
+      url: app.host + '/games',
+      method: 'POST',
+      headers: {
+        Authorization: 'Token token=' + app.user.token,
+      }
+  })
+};
+
+
+
 
 module.exports = {
   signUp,
   signIn,
   signOut,
   changePassword,
+  gameUpdate,
+  gameCreation,
 };

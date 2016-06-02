@@ -21,10 +21,22 @@ const signOutSuccess = function(event){
 
 };
 
+const gameCreation = function(data){
+  app.game = data.game;
+  console.log(app);
+}
+
+const gameUpdate = function(data){
+  app.game = data.game;
+  console.log(app);
+}
+
 
 module.exports = {
   failure,
   success,
   signInSuccess,
   signOutSuccess,
+  gameCreation,
+  gameUpdate,
 };
