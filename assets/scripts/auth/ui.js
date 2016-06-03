@@ -23,13 +23,12 @@ const signOutSuccess = function(event){
 
 const gameCreation = function(data){
   app.game = data.game;
-  console.log(app);
-}
+};
 
 const gameUpdate = function(data){
   app.game = data.game;
-  console.log(app);
-}
+  console.log(app.game);
+};
 
 
 module.exports = {

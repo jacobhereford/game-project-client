@@ -18,16 +18,46 @@ require('expose?jQuery!jquery');
 
 require('expose?getFormFields!./lib/get-form-fields.js');
 
+
+playerTurn =
+
+function checkForWinner() {
+  let winning_lines = [[0, 1 ,2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]];
+winning_lines.forEach(function(line) {
+let cell1 = line[0];
+let cell2 = line[1];
+let cell3 = line[2];
+if(current_player === 'cell'[cell1] && 'cell'[cell1] === 'cell'[cell2] && 'cell'[cell2] === 'cell'[cell3] && 'cell'[cell3]) {
+  winner = current_player;
+}
+});
+}
+
+function endGame() {
+  checkForWinner()=
+}
+
+
+
+
+
 $(document).ready(function tictactoe() {
-  var BLANK = '';
-  var board = [BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK];
-  var x = "X";
-  var o = "O";
-  var current_player = x;
-  var winner = "none";
-  var move = 0;
-  var computer = o;
-  var start_message = $('#message').clone();
+  let BLANK = '';
+  let board = [BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK];
+  let x = "X";
+  let o = "O";
+  let current_player = x;
+  let winner = "none";
+  let move = 0;
+  let computer = o;
+  let start_message = $('#message').clone();
 
   function virtualPlayer(player) {
     computer = player;
@@ -39,7 +69,7 @@ $(document).ready(function tictactoe() {
   }
 
   function virtualMove() {
-    var box = Math.floor(Math.random() * 8);
+    let box = Math.floor(Math.random() * 8);
     if(board[box] === BLANK) {
       $('*[data-position="' + box + '"]').trigger("click");
     } else {
@@ -82,7 +112,7 @@ $(document).ready(function tictactoe() {
   }
 
   function playerTurn(event) {
-    var position = $(event.target).attr('data-position');
+    let position = $(event.target).attr('data-position');
     if(board[position] !== BLANK) {
       displayMessage("This square is taken; please select a free square.", '#ff9999');
     } else if(board[position] === BLANK) {
@@ -98,7 +128,7 @@ $(document).ready(function tictactoe() {
   }
 
   function drawBoard() {
-    for(var i = 0; i < 9; i++) {
+    for(let i = 0; i < 9; i++) {
       $('.cell[data-position="' + i + '"]').text(board[i]);
     }
   }
@@ -108,11 +138,11 @@ $(document).ready(function tictactoe() {
   }
 
   function checkForWinner() {
-    var winning_lines = [[0, 1 ,2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8],[2, 4, 6]];
+    let winning_lines = [[0, 1 ,2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8],[2, 4, 6]];
     winning_lines.forEach(function(line) {
-      var cell1 = line[0];
-      var cell2 = line[1];
-      var cell3 = line[2];
+      let cell1 = line[0];
+      let cell2 = line[1];
+      let cell3 = line[2];
       if(current_player === board[cell1] && board[cell1] === board[cell2] && board[cell2] === board[cell3]) {
         winner = current_player;
       }

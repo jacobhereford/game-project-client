@@ -6,7 +6,7 @@ const signUp = (data) => {
       url: app.host + '/sign-up/',
       method: 'POST',
       data: data
-  })
+  });
 };
 
 const signIn = (data) => {
@@ -14,7 +14,7 @@ const signIn = (data) => {
     url: app.host + '/sign-in/',
     method: 'POST',
     data
-  })
+  });
 };
 
 const signOut = () => {
@@ -25,7 +25,7 @@ const signOut = () => {
       Authorization: 'Token token=' + app.user.token,
     }
   });
-}
+};
 
 const changePassword = (data) => {
   return $.ajax({
@@ -36,18 +36,26 @@ const changePassword = (data) => {
     },
     data: data,
   });
-}
+};
 
-const gameUpdate = (data) => {
+const gameUpdate = (indexOfArray, value) => {
   return $.ajax({
     url: app.host + '/games/' + app.game.id,
     method: 'PATCH',
     headers: {
       Authorization: 'Token token=' + app.user.token,
     },
-    data: data,
+    data: {
+      "game": {
+        "cell": {
+          "index": indexOfArray,
+          "value": value
+        },
+        "over": false
+      }
+    }
   });
-}
+};
 
 const gameCreation = () => {
   return $.ajax({
@@ -56,9 +64,19 @@ const gameCreation = () => {
       headers: {
         Authorization: 'Token token=' + app.user.token,
       }
-  })
+  });
 };
 
+const cell = (data) => {
+  return $.ajax({
+    url: app.host + '/games/' + app.game.id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + app.user.token,
+    },
+    data: data
+  });
+};
 
 
 
@@ -69,4 +87,5 @@ module.exports = {
   changePassword,
   gameUpdate,
   gameCreation,
+  cell,
 };

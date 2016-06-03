@@ -6,7 +6,7 @@ $font-color: #0c0c0c;
 
 body {
   background-color: $background-color;
-  color: $font-color
+  color: $font-color;
 }
 
 h1  {
@@ -24,4 +24,12 @@ div {
 form{
   padding-bottom:20px;
   text-align: center;
+}
+
+#game-create{
+  height: 30px;
+}
+
+#game-update{
+  height: 30px;
 }

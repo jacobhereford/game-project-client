@@ -5,6 +5,8 @@ const getFormFields = require('../../../lib/get-form-fields');
 const api = require('./api');
 const ui = require('./ui');
 
+let turn = 0;
+
 const onSignUp = function(event){
   event.preventDefault();
   let data = getFormFields(event.target);
@@ -41,16 +43,33 @@ const gameCreation = function(event){
   event.preventDefault();
   api.gameCreation()
   .done(ui.gameCreation)
-  .fail(ui.failure)
-}
+  .fail(ui.failure);
+};
 
 const gameUpdate = function(event){
   event.preventDefault();
-  let data = "";
-  api.gameUpdate(data)
+
+  let move = '';
+  let indexOfArray = $(this).data("id");
+  let value = '';
+  if (turn % 2 === 0) {
+    move = 'X';
+    $(this).text(move);
+    value = move;
+    ++turn;
+  } else {
+    move = 'O';
+    $(this).text(move);
+    value = move;
+    ++turn;
+  }
+  api.gameUpdate(indexOfArray, value)
   .done(ui.gameUpdate)
-  .fail(ui.failure)
-}
+  .fail(ui.failure);
+};
+
+
+
 
 const addHandlers = () => {
   $('#sign-up').on('submit', onSignUp);
@@ -59,6 +78,8 @@ const addHandlers = () => {
   $('#change-password').on('submit', onChangePassword);
   $('#game-create').on('click', gameCreation);
   $('#game-update').on('click', gameUpdate);
+  $('.cell').on('click', gameUpdate);
+  //$('.cell').on('click', playerTurn)
 };
 
 module.exports = {
