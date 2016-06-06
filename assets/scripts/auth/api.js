@@ -57,6 +57,21 @@ const gameUpdate = (indexOfArray, value) => {
   });
 };
 
+const gameOver = () => {
+    return $.ajax({
+      url: app.host + '/games/' + app.game.id,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + app.user.token
+      },
+      data: {
+        "game": {
+          "over": true
+        }
+      }
+    });
+};
+
 const gameCreation = () => {
   return $.ajax({
       url: app.host + '/games',
@@ -88,4 +103,5 @@ module.exports = {
   gameUpdate,
   gameCreation,
   cell,
+  gameOver
 };

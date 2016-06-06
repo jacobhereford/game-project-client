@@ -40,7 +40,12 @@
       </form>
       <div id="game-create" class="btn btn-primary">Create Game</div>
       <div id="game-update" class="btn btn-primary">Update Game</div>
+      <h4 id='player-x-wins'></h4>
+      <h4 id='player-o-wins'></h4>
+
+
       <div class="container">
+          <h3 id="winner"></h3>
           <div class="cell col-lg-4 col-md-4 col-sm-4 col-xs-4" data-id="0">
             <!-- <form>
               <input name="game[cell][index]" type="hidden" value="0">
@@ -104,13 +109,7 @@
               <input name="game[over]" type="hidden" value="false">
             </form> -->
           </div>
-      </div>
-
-      <div class="container">
-        WHO WILL WIN?!?!?!
-
-        <section>Jacob Hereford</section>
-        <section>General Assembly</section>
+            <input type="button" id="reset-button" value="Reset Game"  />
       </div>
     </div>
   </body>
