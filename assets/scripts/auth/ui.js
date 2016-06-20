@@ -30,15 +30,65 @@ const gameUpdate = function(data){
   console.log(app.game);
 };
 
-const displayWinner = function(currentPlayer) {
-  if (currentPlayer === null) {
-    $('h3#winner').text('There is no winner. There are no more spaces to fill.');
-  } else {
-    $('h3#winner').text("Player " + currentPlayer + " is the winner!");
-    app.playerWins[currentPlayer] += 1;
-    $('h4#player-x-wins').text("Player X has " + app.playerWins['X'] + " wins");
-    $('h4#player-o-wins').text('Player O has ' + app.playerWins['O'] + " wins");
+const checkForWinner = function(data) {
+  let winner = null;
+
+  let winning_lines = [[0, 1 ,2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6]];
+winning_lines.forEach(function(line) {
+let cell1 = line[0];
+let cell2 = line[1];
+let cell3 = line[2];
+let cells = data.cells;
+if('X' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
+  if (data.over === true) {
+    winner = data.player_x;
   }
+}
+if('O' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
+  if (data.over === true) {
+    winner = data.player_o;
+  }
+}
+});
+  return winner;
+}
+
+const gameStat = function(data){
+  let userWinners = {};
+  let gamesOver = data.games;
+  gamesOver.forEach( (game) => {
+    let winner = checkForWinner(game);
+    if (winner === null) {
+      winner = { email: 'null'};
+    }
+    if (typeof winner !== 'undefined') {
+      if (userWinners[winner.email]) {
+        userWinners[winner.email] += 1;
+      } else {
+        userWinners[winner.email] = 1;
+      }
+    }
+  });
+  ;
+
+  displayWinner(userWinners);
+}
+
+const displayWinner = function(userWinners) {
+  console.log(userWinners);
+  let textValue = [];
+  for( let i = 0; i < Object.keys(userWinners).length; i++) {
+    textValue.push("Player: " + Object.keys(userWinners)[i] + " has " + userWinners[Object.keys(userWinners)[i]] + " wins.");
+  }
+
+  $('h4#player-x-wins').text(textValue.join("\n"));
 };
 
 module.exports = {
@@ -48,5 +98,6 @@ module.exports = {
   signOutSuccess,
   gameCreation,
   gameUpdate,
-  displayWinner
+  displayWinner,
+  gameStat
 };

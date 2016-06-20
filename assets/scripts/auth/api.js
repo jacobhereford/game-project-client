@@ -93,6 +93,16 @@ const cell = (data) => {
   });
 };
 
+const gameStat = () => {
+  return $.ajax({
+    url: app.host + '/games/?over=true',
+    method: 'GET',
+    headers:{
+      Authorization: 'Token token=' + app.user.token,
+    }
+  });
+}
+
 
 
 module.exports = {
@@ -103,5 +113,6 @@ module.exports = {
   gameUpdate,
   gameCreation,
   cell,
+  gameStat,
   gameOver
 };
