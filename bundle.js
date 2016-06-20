@@ -80,6 +80,10 @@ webpackJsonp([0],[
 	  api.gameCreation().done(ui.gameCreation).fail(ui.failure);
 	};
 
+	var gameStat = function gameStat(data) {
+	  api.gameStat().done(ui.gameStat).fail(ui.failure);
+	};
+
 	var checkForWinner = function checkForWinner(data) {
 	  var winner = null;
 
@@ -92,14 +96,14 @@ webpackJsonp([0],[
 	    var cells = data.game.cells;
 	    if (currentPlayer === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
 	      winner = currentPlayer;
-	      api.gameOver().done(ui.displayWinner(currentPlayer)).done(ui.gameUpdate);
+	      api.gameOver().done(gameStat).done(ui.gameUpdate);
 	    }
 	    var filledCellsCount = data.game.cells.filter(function (item) {
 	      return item.trim().length > 0;
 	    }).length;
 	    console.log(filledCellsCount);
 	    if (winner === null && filledCellsCount === 9) {
-	      api.gameOver().done(ui.displayWinner(null)).done(ui.gameUpdate);
+	      api.gameOver().done(gameStat).done(ui.gameUpdate);
 	    }
 	  });
 	};
@@ -317,6 +321,16 @@ webpackJsonp([0],[
 	  });
 	};
 
+	var gameStat = function gameStat() {
+	  return $.ajax({
+	    url: app.host + '/games/?over=true',
+	    method: 'GET',
+	    headers: {
+	      Authorization: 'Token token=' + app.user.token
+	    }
+	  });
+	};
+
 	module.exports = {
 	  signUp: signUp,
 	  signIn: signIn,
@@ -325,6 +339,7 @@ webpackJsonp([0],[
 	  gameUpdate: gameUpdate,
 	  gameCreation: gameCreation,
 	  cell: cell,
+	  gameStat: gameStat,
 	  gameOver: gameOver
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
@@ -376,15 +391,58 @@ webpackJsonp([0],[
 	  console.log(app.game);
 	};
 
-	var displayWinner = function displayWinner(currentPlayer) {
-	  if (currentPlayer === null) {
-	    $('h3#winner').text('There is no winner. There are no more spaces to fill.');
-	  } else {
-	    $('h3#winner').text("Player " + currentPlayer + " is the winner!");
-	    app.playerWins[currentPlayer] += 1;
-	    $('h4#player-x-wins').text("Player X has " + app.playerWins['X'] + " wins");
-	    $('h4#player-o-wins').text('Player O has ' + app.playerWins['O'] + " wins");
+	var checkForWinner = function checkForWinner(data) {
+	  var winner = null;
+
+	  var winning_lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+	  winning_lines.forEach(function (line) {
+	    var cell1 = line[0];
+	    var cell2 = line[1];
+	    var cell3 = line[2];
+	    var cells = data.cells;
+	    if ('X' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
+	      if (data.over === true) {
+	        winner = data.player_x;
+	      }
+	    }
+	    if ('O' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
+	      if (data.over === true) {
+	        winner = data.player_o;
+	      }
+	    }
+	  });
+	  return winner;
+	};
+
+	var gameStat = function gameStat(data) {
+	  var userWinners = {};
+	  var gamesOver = data.games;
+	  gamesOver.forEach(function (game) {
+	    var winner = checkForWinner(game);
+	    if (winner === null) {
+	      winner = { email: 'null' };
+	    }
+	    if (typeof winner !== 'undefined') {
+	      if (userWinners[winner.email]) {
+	        userWinners[winner.email] += 1;
+	      } else {
+	        userWinners[winner.email] = 1;
+	      }
+	    }
+	  });
+	  ;
+
+	  displayWinner(userWinners);
+	};
+
+	var displayWinner = function displayWinner(userWinners) {
+	  console.log(userWinners);
+	  var textValue = [];
+	  for (var i = 0; i < Object.keys(userWinners).length; i++) {
+	    textValue.push("Player: " + Object.keys(userWinners)[i] + " has " + userWinners[Object.keys(userWinners)[i]] + " wins.");
 	  }
+
+	  $('h4#player-x-wins').text(textValue.join("\n"));
 	};
 
 	module.exports = {
@@ -394,7 +452,8 @@ webpackJsonp([0],[
 	  signOutSuccess: signOutSuccess,
 	  gameCreation: gameCreation,
 	  gameUpdate: gameUpdate,
-	  displayWinner: displayWinner
+	  displayWinner: displayWinner,
+	  gameStat: gameStat
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
