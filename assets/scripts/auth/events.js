@@ -73,6 +73,7 @@ let cells = data.game.cells;
 if(currentPlayer === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
   winner = currentPlayer;
   api.gameOver()
+    .done(ui.checkForWinner)
     .done(gameStat)
     .done(ui.gameUpdate);
 }
@@ -82,6 +83,7 @@ let filledCellsCount = data.game.cells.filter( function (item) {
 console.log(filledCellsCount);
 if (winner === null && filledCellsCount === 9) {
   api.gameOver()
+  .done(ui.checkForWinner)
   .done(gameStat)
   .done(ui.gameUpdate);
 }

@@ -31,7 +31,8 @@ const gameUpdate = function(data){
 };
 
 const checkForWinner = function(data) {
-  let winner = null;
+  let winner = undefined;
+  let winningLetter = '';
 
   let winning_lines = [[0, 1 ,2],
   [3, 4, 5],
@@ -42,45 +43,35 @@ const checkForWinner = function(data) {
   [0, 4, 8],
   [2, 4, 6]];
 winning_lines.forEach(function(line) {
-let cell1 = line[0];
+let cell1 = line[0]; // cells are rows
 let cell2 = line[1];
 let cell3 = line[2];
-let cells = data.cells;
+let cells = data.game.cells;
+
 if('X' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
-  if (data.over === true) {
-    winner = data.player_x;
-    currentWinner(winner, 'X');
+  if (data.game.over === true) {
+    winner = data.game.player_x || 'X';
+    winningLetter = 'X';
   }
 }
 if('O' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
-  if (data.over === true) {
-    winner = data.player_o;
-    currentWinner(winner, 'O');
+  if (data.game.over === true) {
+    winner = data.game.player_o || 'O';
+    winningLetter = 'O';
   }
 }
 });
+  currentWinner(winner, winningLetter);
   return winner;
-}
+
+};
 
 const gameStat = function(data){
   let userWinners = {};
   let gamesOver = data.games;
-  gamesOver.forEach( (game) => {
-    let winner = checkForWinner(game);
-    if (winner === null) {
-      winner = { email: 'null'};
-    }
-    if (typeof winner !== 'undefined') {
-      if (userWinners[winner.email]) {
-        userWinners[winner.email] += 1;
-      } else {
-        userWinners[winner.email] = 1;
-      }
-    }
-  });
-  ;
+  let gamesPlayed = gamesOver.length;
 
-  displayWinner(userWinners);
+  $("h4#all-winners").text("You have played " + gamesPlayed + " games.");
 }
 
 
@@ -95,13 +86,14 @@ const displayWinner = function(userWinners) {
 };
 
 const currentWinner = function(currentWin, currentPlayer) {
-  if (currentWin == null) {
+  if (currentWin == undefined) {
     $('h3#winner').text('There is no winner. There are no more spaces to fill.');
   } else {
     $('h3#winner').text("Player " + currentPlayer + " is the winner!");
   }
 
 };
+
 module.exports = {
   failure,
   success,
@@ -110,5 +102,6 @@ module.exports = {
   gameCreation,
   gameUpdate,
   displayWinner,
-  gameStat
+  gameStat,
+  checkForWinner
 };
