@@ -403,11 +403,13 @@ webpackJsonp([0],[
 	    if ('X' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
 	      if (data.over === true) {
 	        winner = data.player_x;
+	        currentWinner(winner, 'X');
 	      }
 	    }
 	    if ('O' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
 	      if (data.over === true) {
 	        winner = data.player_o;
+	        currentWinner(winner, 'O');
 	      }
 	    }
 	  });
@@ -442,9 +444,16 @@ webpackJsonp([0],[
 	    textValue.push("Player: " + Object.keys(userWinners)[i] + " has " + userWinners[Object.keys(userWinners)[i]] + " wins.");
 	  }
 
-	  $('h4#player-x-wins').text(textValue.join("\n"));
+	  $('h4#all-winners').text(textValue.join("\n"));
 	};
 
+	var currentWinner = function currentWinner(currentWin, currentPlayer) {
+	  if (currentWin == null) {
+	    $('h3#winner').text('There is no winner. There are no more spaces to fill.');
+	  } else {
+	    $('h3#winner').text("Player " + currentPlayer + " is the winner!");
+	  }
+	};
 	module.exports = {
 	  failure: failure,
 	  success: success,
