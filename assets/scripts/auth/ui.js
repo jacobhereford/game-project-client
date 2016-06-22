@@ -49,11 +49,13 @@ let cells = data.cells;
 if('X' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
   if (data.over === true) {
     winner = data.player_x;
+    currentWinner(winner, 'X');
   }
 }
 if('O' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
   if (data.over === true) {
     winner = data.player_o;
+    currentWinner(winner, 'O');
   }
 }
 });
@@ -81,6 +83,7 @@ const gameStat = function(data){
   displayWinner(userWinners);
 }
 
+
 const displayWinner = function(userWinners) {
   console.log(userWinners);
   let textValue = [];
@@ -88,9 +91,17 @@ const displayWinner = function(userWinners) {
     textValue.push("Player: " + Object.keys(userWinners)[i] + " has " + userWinners[Object.keys(userWinners)[i]] + " wins.");
   }
 
-  $('h4#player-x-wins').text(textValue.join("\n"));
+  $('h4#all-winners').text(textValue.join("\n"));
 };
 
+const currentWinner = function(currentWin, currentPlayer) {
+  if (currentWin == null) {
+    $('h3#winner').text('There is no winner. There are no more spaces to fill.');
+  } else {
+    $('h3#winner').text("Player " + currentPlayer + " is the winner!");
+  }
+
+};
 module.exports = {
   failure,
   success,
