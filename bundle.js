@@ -96,14 +96,14 @@ webpackJsonp([0],[
 	    var cells = data.game.cells;
 	    if (currentPlayer === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
 	      winner = currentPlayer;
-	      api.gameOver().done(gameStat).done(ui.gameUpdate);
+	      api.gameOver().done(ui.checkForWinner).done(gameStat).done(ui.gameUpdate);
 	    }
 	    var filledCellsCount = data.game.cells.filter(function (item) {
 	      return item.trim().length > 0;
 	    }).length;
 	    console.log(filledCellsCount);
 	    if (winner === null && filledCellsCount === 9) {
-	      api.gameOver().done(gameStat).done(ui.gameUpdate);
+	      api.gameOver().done(ui.checkForWinner).done(gameStat).done(ui.gameUpdate);
 	    }
 	  });
 	};
@@ -392,49 +392,39 @@ webpackJsonp([0],[
 	};
 
 	var checkForWinner = function checkForWinner(data) {
-	  var winner = null;
+	  var winner = undefined;
+	  var winningLetter = '';
 
 	  var winning_lines = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 	  winning_lines.forEach(function (line) {
-	    var cell1 = line[0];
+	    var cell1 = line[0]; // cells are rows
 	    var cell2 = line[1];
 	    var cell3 = line[2];
-	    var cells = data.cells;
+	    var cells = data.game.cells;
+
 	    if ('X' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
-	      if (data.over === true) {
-	        winner = data.player_x;
-	        currentWinner(winner, 'X');
+	      if (data.game.over === true) {
+	        winner = data.game.player_x || 'X';
+	        winningLetter = 'X';
 	      }
 	    }
 	    if ('O' === cells[cell1] && cells[cell1] === cells[cell2] && cells[cell2] === cells[cell3] && cells[cell3]) {
-	      if (data.over === true) {
-	        winner = data.player_o;
-	        currentWinner(winner, 'O');
+	      if (data.game.over === true) {
+	        winner = data.game.player_o || 'O';
+	        winningLetter = 'O';
 	      }
 	    }
 	  });
+	  currentWinner(winner, winningLetter);
 	  return winner;
 	};
 
 	var gameStat = function gameStat(data) {
 	  var userWinners = {};
 	  var gamesOver = data.games;
-	  gamesOver.forEach(function (game) {
-	    var winner = checkForWinner(game);
-	    if (winner === null) {
-	      winner = { email: 'null' };
-	    }
-	    if (typeof winner !== 'undefined') {
-	      if (userWinners[winner.email]) {
-	        userWinners[winner.email] += 1;
-	      } else {
-	        userWinners[winner.email] = 1;
-	      }
-	    }
-	  });
-	  ;
+	  var gamesPlayed = gamesOver.length;
 
-	  displayWinner(userWinners);
+	  $("h4#all-winners").text("You have played " + gamesPlayed + " games.");
 	};
 
 	var displayWinner = function displayWinner(userWinners) {
@@ -448,12 +438,13 @@ webpackJsonp([0],[
 	};
 
 	var currentWinner = function currentWinner(currentWin, currentPlayer) {
-	  if (currentWin == null) {
+	  if (currentWin == undefined) {
 	    $('h3#winner').text('There is no winner. There are no more spaces to fill.');
 	  } else {
 	    $('h3#winner').text("Player " + currentPlayer + " is the winner!");
 	  }
 	};
+
 	module.exports = {
 	  failure: failure,
 	  success: success,
@@ -462,7 +453,8 @@ webpackJsonp([0],[
 	  gameCreation: gameCreation,
 	  gameUpdate: gameUpdate,
 	  displayWinner: displayWinner,
-	  gameStat: gameStat
+	  gameStat: gameStat,
+	  checkForWinner: checkForWinner
 	};
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
