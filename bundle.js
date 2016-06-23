@@ -364,9 +364,7 @@ webpackJsonp([0],[
 
 	var app = __webpack_require__(6);
 	app.playerWins = { X: 0, O: 0 };
-	var success = function success(data) {
-	  console.log(data);
-	};
+	var success = function success(data) {};
 
 	var failure = function failure(error) {
 	  console.error(error);
@@ -374,12 +372,10 @@ webpackJsonp([0],[
 
 	var signInSuccess = function signInSuccess(data) {
 	  app.user = data.user;
-	  console.log(app);
 	};
 
 	var signOutSuccess = function signOutSuccess(event) {
 	  app.user = null;
-	  console.log(app);
 	};
 
 	var gameCreation = function gameCreation(data) {
@@ -388,7 +384,6 @@ webpackJsonp([0],[
 
 	var gameUpdate = function gameUpdate(data) {
 	  app.game = data.game;
-	  console.log(app.game);
 	};
 
 	var checkForWinner = function checkForWinner(data) {
@@ -428,7 +423,6 @@ webpackJsonp([0],[
 	};
 
 	var displayWinner = function displayWinner(userWinners) {
-	  console.log(userWinners);
 	  var textValue = [];
 	  for (var i = 0; i < Object.keys(userWinners).length; i++) {
 	    textValue.push("Player: " + Object.keys(userWinners)[i] + " has " + userWinners[Object.keys(userWinners)[i]] + " wins.");
