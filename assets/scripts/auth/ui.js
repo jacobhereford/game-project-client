@@ -3,7 +3,6 @@
 const app = require('../app.js');
 app.playerWins = { X: 0, O: 0};
 const success = (data) => {
-  console.log(data);
 };
 
 const failure = (error) => {
@@ -12,12 +11,10 @@ const failure = (error) => {
 
 const signInSuccess = function(data){
     app.user = data.user;
-    console.log(app);
 };
 
 const signOutSuccess = function(event){
   app.user = null;
-  console.log(app);
 
 };
 
@@ -27,7 +24,6 @@ const gameCreation = function(data){
 
 const gameUpdate = function(data){
   app.game = data.game;
-  console.log(app.game);
 };
 
 const checkForWinner = function(data) {
@@ -76,7 +72,6 @@ const gameStat = function(data){
 
 
 const displayWinner = function(userWinners) {
-  console.log(userWinners);
   let textValue = [];
   for( let i = 0; i < Object.keys(userWinners).length; i++) {
     textValue.push("Player: " + Object.keys(userWinners)[i] + " has " + userWinners[Object.keys(userWinners)[i]] + " wins.");
